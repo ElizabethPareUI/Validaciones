@@ -38,26 +38,36 @@ function validarApellido(){
    $('.mivalidador02').text('Apellido válido').removeClass("text-danger").addClass("text-success");
   }
 }
+function validarEmail() {
+    let validarVacio = document.getElementById('validationServerUsername').value;
 
-function validarEmail(){
-   let validarVacio = document.getElementById('validationServerUsername').value;
+    if (!validarVacio) {
+        $('#validationServerUsername').removeClass("is-valid").addClass("is-invalid");
+        $('#validationServerUsernameFeedback').text('No puede quedar vacío').removeClass("text-success").addClass("text-danger");
+    } else if (!validarVacio.includes("@")) {
+        $('#validationServerUsername').removeClass("is-valid").addClass("is-invalid");
+        $('#validationServerUsernameFeedback').text('Debe incluir "@"').removeClass("text-success").addClass("text-danger");
+    } else {
+     
+        var dominiosPermitidos = ["hotmail", "gmail", "outlook", "davinci"];
+        var dominioValido = false;
 
-   
- if(!validarVacio){
-     $('#validationServerUsername').removeClass("is-valid").addClass("is-invalid");  
-     $('#validationServerUsernameFeedback').text('No puede queda vacio').removeClass("text-success").addClass("text-danger");    
-  }else if(!validarVacio.includes("@")){
-   $('#validationServerUsername').removeClass("is-valid").addClass("is-invalid");
-   $('#validationServerUsernameFeedback').text('tiene que incluir el @').removeClass("text-success").addClass("text-danger");
-  }else if(!validarVacio.includes(".")){
-   $('#validationServerUsername').removeClass("is-valid").addClass("is-invalid");
-   $('#validationServerUsernameFeedback').text('ingrese un dominio valido').removeClass("text-success").addClass("text-danger");
-  }else{
-   $('#validationServerUsername').removeClass("is-invalid").addClass("is-valid");
-   $('#validationServerUsernameFeedback').text('Email válido').removeClass("invalid-feedback").addClass("valid-feedback");
-  }
+        for (var i = 0; i < dominiosPermitidos.length; i++) {
+            if (validarVacio.includes("@" + dominiosPermitidos[i])) {
+                dominioValido = true;
+                break;
+            }
+        }
 
- }
+        if (!dominioValido) {
+            $('#validationServerUsername').removeClass("is-valid").addClass("is-invalid");
+            $('#validationServerUsernameFeedback').text('Ingrese un dominio válido').removeClass("text-success").addClass("text-danger");
+        } else {
+            $('#validationServerUsername').removeClass("is-invalid").addClass("is-valid");
+            $('#validationServerUsernameFeedback').text('Email válido').removeClass("invalid-feedback").addClass("valid-feedback");
+        }
+    }
+}
 
 
 document.addEventListener('DOMContentLoaded', function() {
